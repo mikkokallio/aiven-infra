@@ -8,7 +8,7 @@ This repo is intended testing the deployment of a Kafka-Elasticsearch-InfluxDB-G
 
 ## Test the pipeline with Kafka, Grafana, and ES
 
-Everything is deployed to a VPC for securiry reasons, so you cannot access the services right away. To test the data pipeline works as intended, let's expose a few services to public internet so we can easily access them.
+Everything is deployed to a VPC for security reasons, so you cannot access the services right away. To test the data pipeline works as intended, let's expose a few services to public internet so we can easily access them.
 
 1. In the Aiven console, go to **Services** and enable the following features in the **Advanced configuration** section of the services listed below:
 * `exercise-grafana`: `public_access.grafana`
