@@ -14,7 +14,7 @@ resource "aiven_service" "kf" {
   project                 = aiven_project.omega.project
   cloud_name              = var.location
 	project_vpc_id          = aiven_project_vpc.vpc.id
-  plan                    = "business-4"
+  plan                    = "business-8"
   service_name            = "${var.resource_prefix}-kf"
   service_type            = "kafka"
   maintenance_window_dow  = "monday"
