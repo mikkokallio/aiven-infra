@@ -2,8 +2,8 @@
 This repo is intended for testing the deployment of a Kafka-Elasticsearch-InfluxDB-Grafana data pipeline on the Aiven platform. The PDF describes the architecture and features of the infrastructure, and how it could be further developed.
 
 ## How to use
-1. Clone the repo and run `terraform init`.
-2. Set the environment variables `TF_VAR_aiven_api_token` and `TF_VAR_aiven_project_name` or insert the corresponding values to `terraform.tfvars`. Unless you're using a trial account or something similar, you'll likely also need to include your billing information in the project resource.
+1. Clone the repo and run `terraform init` in the `iac` folder.
+2. Set the environment variables `TF_VAR_aiven_api_token` and `TF_VAR_aiven_project_name` or insert the corresponding values to `terraform.tfvars`. Unless you're using a free trial account or something similar, you'll likely also need to include your billing information in the project resource.
 3. Run `terraform apply` to deploy the infrastructure into your Aiven account.
 
 ## Test the pipeline with Kafka, Grafana, and ES
