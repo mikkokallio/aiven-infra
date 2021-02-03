@@ -1,5 +1,5 @@
 # aiven-infra
-This repo is intended testing the deployment of a Kafka-Elasticsearch-InfluxDB-Grafana data pipeline on the Aiven platform. The PDF describes the architecture and features of the infrastructure, and how it could be further developed.
+This repo is intended for testing the deployment of a Kafka-Elasticsearch-InfluxDB-Grafana data pipeline on the Aiven platform. The PDF describes the architecture and features of the infrastructure, and how it could be further developed.
 
 ## How to use
 1. Clone the repo and run `terraform init`.
