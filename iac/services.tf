@@ -60,27 +60,27 @@ resource "aiven_service" "es" {
 
 # Connector from Kafka to Elasticsearch
 resource "aiven_kafka_connector" "kf-es-conn" {
-    project        = aiven_project.omega.project
-    service_name   = aiven_service.kf.service_name
-    depends_on     = [
-        aiven_service.es,
-        aiven_service.kf
-    ]
-    connector_name = "kf-es-conn"
+  project        = aiven_project.omega.project
+  service_name   = aiven_service.kf.service_name
+  depends_on     = [
+    aiven_service.es,
+    aiven_service.kf
+  ]
+  connector_name = "kf-es-conn"
 
-    config = {
-        "topics"                         = "ingest_example"
-        "connector.class"                = "io.aiven.connect.elasticsearch.ElasticsearchSinkConnector"
-        "type.name"                      = "es-connector"
-        "name"                           = "kf-es-conn"
-        "connection.url"                 = aiven_service.es.service_uri
-        "key.converter"                  = "org.apache.kafka.connect.json.JsonConverter"
-        "value.converter"                = "org.apache.kafka.connect.json.JsonConverter"
-        "key.ignore"                     = "true"
-        "schema.ignore"                  = "true"
-        "value.converter.schemas.enable" = "false"
-        "key.converter.schemas.enable"   = "false"
-    }
+  config = {
+    "topics"                         = "ingest_example"
+    "connector.class"                = "io.aiven.connect.elasticsearch.ElasticsearchSinkConnector"
+    "type.name"                      = "es-connector"
+    "name"                           = "kf-es-conn"
+    "connection.url"                 = aiven_service.es.service_uri
+    "key.converter"                  = "org.apache.kafka.connect.json.JsonConverter"
+    "value.converter"                = "org.apache.kafka.connect.json.JsonConverter"
+    "key.ignore"                     = "true"
+    "schema.ignore"                  = "true"
+    "value.converter.schemas.enable" = "false"
+    "key.converter.schemas.enable"   = "false"
+  }
 }
 
 # InfluxDB service
