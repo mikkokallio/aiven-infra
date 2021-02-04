@@ -1,11 +1,11 @@
 # VPC for all services
 resource "aiven_project_vpc" "vpc" {
-	project      = aiven_project.omega.project
-	cloud_name   = var.location
-	network_cidr = "10.0.0.0/24"
+  project      = aiven_project.omega.project
+  cloud_name   = var.location
+  network_cidr = "10.0.0.0/24"
 
-	timeouts {
-		create = "5m"
+  timeouts {
+    create = "5m"
   }
 }
 
@@ -13,7 +13,7 @@ resource "aiven_project_vpc" "vpc" {
 resource "aiven_service" "kf" {
   project                 = aiven_project.omega.project
   cloud_name              = var.location
-	project_vpc_id          = aiven_project_vpc.vpc.id
+  project_vpc_id          = aiven_project_vpc.vpc.id
   plan                    = "business-8"
   service_name            = "${var.resource_prefix}-kf"
   service_type            = "kafka"
@@ -28,7 +28,7 @@ resource "aiven_service" "kf" {
     kafka {
       group_max_session_timeout_ms = 70000
       log_retention_bytes          = 1000000000
-			auto_create_topics_enable    = false
+      auto_create_topics_enable    = false
     }
   }
 }
@@ -44,18 +44,18 @@ resource "aiven_kafka_topic" "ingest_example" {
 
 # Elasticsearch service
 resource "aiven_service" "es" {
-	project                 = aiven_project.omega.project
-	cloud_name              = var.location
-	project_vpc_id          = aiven_project_vpc.vpc.id
-	plan                    = "business-32"
-	service_name            = "${var.resource_prefix}-es"
-	service_type            = "elasticsearch"
-	maintenance_window_dow  = "monday"
-	maintenance_window_time = "10:00:00"
+  project                 = aiven_project.omega.project
+  cloud_name              = var.location
+  project_vpc_id          = aiven_project_vpc.vpc.id
+  plan                    = "business-32"
+  service_name            = "${var.resource_prefix}-es"
+  service_type            = "elasticsearch"
+  maintenance_window_dow  = "monday"
+  maintenance_window_time = "10:00:00"
 
-	elasticsearch_user_config {
-		elasticsearch_version = "7"
-	}
+  elasticsearch_user_config {
+    elasticsearch_version = "7"
+  }
 }
 
 # Connector from Kafka to Elasticsearch
@@ -87,7 +87,7 @@ resource "aiven_kafka_connector" "kf-es-conn" {
 resource "aiven_service" "influx" {
   project                 = aiven_project.omega.project
   cloud_name              = var.location
-	project_vpc_id          = aiven_project_vpc.vpc.id
+  project_vpc_id          = aiven_project_vpc.vpc.id
   plan                    = "startup-4"
   service_name            = "${var.resource_prefix}-influx"
   service_type            = "influxdb"
@@ -118,14 +118,13 @@ resource "aiven_service_integration" "es_metrics" {
 resource "aiven_service" "grafana" {
   project        = aiven_project.omega.project
   cloud_name     = var.location
-	project_vpc_id = aiven_project_vpc.vpc.id
+  project_vpc_id = aiven_project_vpc.vpc.id
   plan           = "startup-1"
   service_name   = "${var.resource_prefix}-grafana"
   service_type   = "grafana"
   grafana_user_config {
     ip_filter = ["0.0.0.0/0"]
-  }
-	
+  }	
 }
 
 # Dashboards for Kafka and Elasticsearch services
@@ -134,9 +133,9 @@ resource "aiven_service_integration" "dashboards" {
   integration_type         = "dashboard"
   source_service_name      = aiven_service.grafana.service_name
   destination_service_name = aiven_service.influx.service_name
-	# Dashboard creation doesn't occur unless sources already exist
-	depends_on = [
-		aiven_service_integration.es_metrics,
-		aiven_service_integration.kf_metrics
-	]
+  # Dashboard creation doesn't occur unless sources already exist
+  depends_on = [
+    aiven_service_integration.es_metrics,
+    aiven_service_integration.kf_metrics
+  ]
 }
